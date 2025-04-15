@@ -73,6 +73,6 @@
 ## 👩‍💻 Autor
 
 **Mayory Astacio Reyna**  
-Desarrollador Jr. | Estudiante de Ing. en Sistemas | Enfocado en datos, backend y automatización.
+Desarrollador Jr.
 
 
