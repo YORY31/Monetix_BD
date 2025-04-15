@@ -1,62 +1,78 @@
-# MONETIX_APP - Documentación de la Base de Datos
+# 💰 MONETIX_DB — Sistema de Gestión de Finanzas Personales
 
-## Descripción General
-**MONETIX_APP** es una base de datos diseñada para gestionar transacciones financieras de usuarios. Permite a los usuarios registrar ingresos y gastos, administrar presupuestos y establecer metas de ahorro.
+**MONETIX_APP** es una base de datos en desarrollo construida con **SQL Server**, enfocada en la administración de ingresos, gastos, presupuestos y metas de ahorro. Este proyecto forma parte de un enfoque práctico para aplicar conocimientos avanzados en diseño y gestión de bases de datos relacionales.
 
-## Estructura de la Base de Datos
-La base de datos se compone de varias tablas principales:
+> ⚠️ **Nota:** Este proyecto aún está en proceso de mejora. Se irán añadiendo nuevas funcionalidades, optimizaciones y documentación a medida que avance su desarrollo.
 
-### 1. **Usuarios (`USERS`)**
-Almacena la información de los usuarios registrados.
-- `ID_USER` (INT, PK) - Identificador único del usuario.
-- `NAME_USER` (NVARCHAR) - Nombre del usuario.
-- `EMAIL` (NVARCHAR, UNIQUE) - Correo electrónico del usuario.
-- `PASSWORDHASH` (NVARCHAR) - Hash de la contraseña.
-- `IS_ACTIVE_USER` (BIT) - Indica si el usuario está activo.
+---
 
-### 2. **Categorías (`CATEGORIES`)**
-Define las categorías de transacciones (ej. "Alimentación", "Salario").
-- `CATEGORY_ID` (INT, PK) - Identificador único de la categoría.
-- `NAME_CATEGORY` (NVARCHAR) - Nombre de la categoría.
-- `TYPE` (NVARCHAR) - Puede ser "Income" o "Expense".
+## 📁 Estructura del Proyecto
+📦 MONETIX_APP ├── BACKUP/ │ └── monetix.bak ├── DIAGRAM/ │ └── DIAGRAM01.png ├── TABLES.SQL ├── INSERT.SQL ├── CRUD.SQL ├── OBJECT.SQL └── README.md
 
-### 3. **Transacciones (`TRANSACTIONS`)**
-Registra los ingresos y gastos de los usuarios.
-- `TRANSACTIONID` (INT, PK) - Identificador único de la transacción.
-- `USERID` (INT, FK -> USERS) - Usuario que realizó la transacción.
-- `CATEGORYID` (INT, FK -> CATEGORIES) - Categoría asociada.
-- `AMOUNT` (DECIMAL) - Monto de la transacción.
-- `TRANSACTIONDATE` (DATETIME) - Fecha de la transacción.
+---
 
-### 4. **Presupuestos (`BUDGETS`)**
-Permite a los usuarios establecer límites de gasto por categoría.
-- `BUDGETID` (INT, PK) - Identificador único.
-- `USERID` (INT, FK -> USERS) - Usuario asociado.
-- `CATEGORYID` (INT, FK -> CATEGORIES) - Categoría de presupuesto.
-- `MAXAMOUNT` (DECIMAL) - Límite de gasto.
-- `STARTDATE` (DATETIME) - Fecha de inicio.
-- `ENDDATE` (DATETIME) - Fecha de fin.
+## 🧱 Estructura de Tablas
 
-### 5. **Metas de Ahorro (`SAVINGS_GOALS`)**
-Los usuarios pueden establecer objetivos financieros.
-- `GOAL_ID` (INT, PK) - Identificador de la meta.
-- `USERID` (INT, FK -> USERS) - Usuario que establece la meta.
-- `TARGETAMOUNT` (DECIMAL) - Monto objetivo.
-- `SAVEDAMOUNT` (DECIMAL) - Monto ahorrado hasta el momento.
+- **USERS** – Información de los usuarios registrados.
+- **CATEGORIES** – Clasificación de ingresos/gastos.
+- **TRANSACTIONS** – Registros financieros.
+- **BUDGETS** – Límites de gasto por categoría.
+- **SAVINGS_GOALS** – Metas de ahorro.
 
-## Procedimientos Almacenados Destacados
-- `INSERT_TRANSACTION` - Inserta una nueva transacción.
-- `GET_USER` - Recupera información de un usuario.
-- `DISABLEINACTIVEUSERS` - Desactiva usuarios inactivos por más de 30 días.
+---
 
-## Índices y Optimización
-- `IDX_TRACSACTIONS_USER` - Mejora consultas de transacciones por usuario.
-- `IDX_SAVINGGOALS_IS_ACHIEVED` - Optimiza búsqueda de metas cumplidas.
+## 🛠️ Componentes Destacados
 
-## Notas
-- La base de datos usa `RECOVERY SIMPLE` para reducir el tamaño del log de transacciones.
-- `QUERY_STORE` está activado para monitorear el rendimiento de consultas.
+### 📊 Vistas
 
-## Autores
-- **Equipo de Desarrollo de MONETIX_APP(Mayory Astacio)**
+- `VW_SUMMARY_OF_TRANSACTIONS`: Resumen de ingresos/gastos por categoría y usuario.
+
+### 🔄 Triggers
+
+- `DELETE_TRANSACTION_LOGIC`: Reemplaza el borrado físico por una desactivación lógica (`IS_ACTIVE = 0`).
+
+### ⚙️ Procedimientos Almacenados (en progreso)
+
+- Inserción y consulta de datos.
+- Desactivación de usuarios inactivos.
+- Consultas de control y monitoreo.
+
+### 🧠 Índices
+
+- Mejorarán la eficiencia en las consultas frecuentes.
+
+---
+
+## 📷 Diagrama Entidad-Relación
+
+![ER Diagram](./DIAGRAM/DIAGRAM01.png)
+
+---
+
+## 🚀 Cómo usar el proyecto
+
+1. Restaura la base de datos desde `monetix.bak` o ejecuta los scripts en orden:
+   - `TABLES.SQL`
+   - `INSERT.SQL`
+   - `OBJECT.SQL`
+   - `CRUD.SQL` para pruebas
+
+2. Explora la vista `VW_SUMMARY_OF_TRANSACTIONS` y el trigger `DELETE_TRANSACTION_LOGIC`.
+
+---
+
+## 🔧 Mejoras Planeadas
+
+- Nuevas vistas para reportes por fecha.
+- Agregado de funciones y procedimientos almacenados avanzados.
+- Panel de control en Excel con visualizaciones (Power Query).
+- Seguridad mediante roles y permisos.
+
+---
+
+## 👩‍💻 Autor
+
+**Mayory Astacio Reyna**  
+Desarrollador Jr. | Estudiante de Ing. en Sistemas | Enfocado en datos, backend y automatización.
+
 
